@@ -9,6 +9,12 @@ module.exports = () => async (bot) => {
            Math.abs(pos1.z - pos2.z) <= tolerance
   }
 
+  // Helper function to clean up note block test area
+  const cleanupNoteBlocks = async (pos) => {
+    await bot.test.setBlock({ x: pos.x, y: pos.y - 1, z: pos.z, blockName: 'air', relative: false })
+    await bot.test.setBlock({ x: pos.x, y: pos.y, z: pos.z, blockName: 'air', relative: false })
+  }
+
   // Helper function to retry an operation
   const retry = async (operation, maxAttempts = 1, delay = 2000) => {
     let lastError
@@ -68,14 +74,14 @@ module.exports = () => async (bot) => {
   const noteTest = async () => {
     const pos = bot.entity.position.offset(1, 0, 0).floored()
     const noteBlockName = bot.supportFeature('noteBlockNameIsNoteBlock') ? 'note_block' : 'noteblock'
+    const BLOCK_UPDATE_DELAY = 100 // Time to ensure blocks are removed before placing new ones
 
     return retry(async () => {
       console.log(`[noteTest] Setting note block at position: ${JSON.stringify(pos)}`)
 
       // Clean up any existing blocks first to ensure a clean state
-      await bot.test.setBlock({ x: pos.x, y: pos.y - 1, z: pos.z, blockName: 'air', relative: false })
-      await bot.test.setBlock({ x: pos.x, y: pos.y, z: pos.z, blockName: 'air', relative: false })
-      await new Promise(resolve => setTimeout(resolve, 100))
+      await cleanupNoteBlocks(pos)
+      await new Promise(resolve => setTimeout(resolve, BLOCK_UPDATE_DELAY))
 
       // Place note block
       await bot.test.setBlock({ x: pos.x, y: pos.y, z: pos.z, blockName: noteBlockName, relative: false })
@@ -94,12 +100,11 @@ module.exports = () => async (bot) => {
 
       assert.strictEqual(block.name, noteBlockName, 'Wrong block name')
 
-      if (typeof instrument === 'string') {
-        assert.ok(typeof instrument === 'string', 'Instrument should be a string')
-      } else if (typeof instrument === 'object' && instrument !== null) {
+      // Validate instrument type (can be string or object depending on version)
+      if (typeof instrument === 'object' && instrument !== null) {
         assert.ok(typeof instrument.name === 'string', 'Instrument name should be a string')
         assert.ok(typeof instrument.id === 'number', 'Instrument id should be a number')
-      } else {
+      } else if (typeof instrument !== 'string') {
         throw new Error(`Unexpected instrument type: ${typeof instrument}`)
       }
 
@@ -146,7 +151,6 @@ module.exports = () => async (bot) => {
   } finally {
     // Cleanup: remove the note block and redstone block
     const pos = bot.entity.position.offset(1, 0, 0).floored()
-    await bot.test.setBlock({ x: pos.x, y: pos.y, z: pos.z, blockName: 'air' })
-    await bot.test.setBlock({ x: pos.x, y: pos.y - 1, z: pos.z, blockName: 'air' })
+    await cleanupNoteBlocks(pos)
   }
 }
