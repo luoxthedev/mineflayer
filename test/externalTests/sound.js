@@ -80,50 +80,81 @@ module.exports = () => async (bot) => {
     return retry(async () => {
       console.log(`[noteTest] Setting note block at position: ${JSON.stringify(pos)}`)
 
-      // Clean up any existing blocks first to ensure a clean state
-      await cleanupNoteBlocks(pos)
-      await new Promise(resolve => setTimeout(resolve, CLEANUP_DELAY))
+      // Track packets for debugging
+      let blockActionReceived = false
+      let blockDigReceived = false
 
-      // Place note block
-      await bot.test.setBlock({ x: pos.x, y: pos.y, z: pos.z, blockName: noteBlockName, relative: false })
-      console.log('[noteTest] Note block placed, waiting for block update...')
-      await new Promise(resolve => setTimeout(resolve, BLOCK_PLACEMENT_DELAY))
-
-      // Check what block is at the position
-      const placedBlock = bot.blockAt(pos)
-      console.log(`[noteTest] Block at position: ${placedBlock ? `${placedBlock.name} (type=${placedBlock.type})` : 'null'}`)
-
-      if (!placedBlock || (placedBlock.name !== 'note_block' && placedBlock.name !== 'noteblock')) {
-        throw new Error(`Failed to place note block at ${JSON.stringify(pos)}, found: ${placedBlock ? placedBlock.name : 'null'}`)
+      const blockActionListener = (packet) => {
+        console.log(`[noteTest] <<< INCOMING block_action packet: blockId=${packet.blockId}, byte1=${packet.byte1}, byte2=${packet.byte2}, location=${JSON.stringify(packet.location)}`)
+        blockActionReceived = true
       }
 
-      console.log('[noteTest] Setting up noteHeard listener')
-      const noteHeardPromise = once(bot, 'noteHeard', 7000)
-
-      // Activate (right-click) the note block to play it - this is more reliable than redstone
-      console.log('[noteTest] Activating note block')
-      await bot.activateBlock(placedBlock)
-      console.log('[noteTest] Note block activated, waiting for noteHeard event...')
-
-      const [block, instrument, pitch] = await noteHeardPromise
-      console.log(`[noteTest] Note heard! Block: ${block.name}, Instrument: ${JSON.stringify(instrument)}, Pitch: ${pitch}`)
-
-      assert.strictEqual(block.name, noteBlockName, 'Wrong block name')
-
-      // Validate instrument type (can be string or object depending on version)
-      if (typeof instrument === 'string') {
-        // String instrument name (older versions)
-      } else if (typeof instrument === 'object' && instrument !== null) {
-        // Object with name and id (newer versions)
-        assert.ok(typeof instrument.name === 'string', 'Instrument name should be a string')
-        assert.ok(typeof instrument.id === 'number', 'Instrument id should be a number')
-      } else {
-        throw new Error(`Unexpected instrument type: ${typeof instrument}`)
+      const blockDigListener = (packet) => {
+        if (packet.status === 2) { // Finish digging
+          console.log(`[noteTest] >>> OUTGOING block_dig packet (status=2): location=${JSON.stringify(packet.location)}, face=${packet.face}`)
+          blockDigReceived = true
+        }
       }
 
-      assert.strictEqual(typeof pitch, 'number', 'Pitch should be a number')
-      assert.ok(pitch >= 0 && pitch <= 24, `Pitch out of range: ${pitch}`)
-      console.log('[noteTest] Test passed successfully')
+      bot._client.on('block_action', blockActionListener)
+      bot._client.on('block_dig', blockDigListener)
+
+      try {
+        // Clean up any existing blocks first to ensure a clean state
+        await cleanupNoteBlocks(pos)
+        await new Promise(resolve => setTimeout(resolve, CLEANUP_DELAY))
+
+        // Place note block
+        await bot.test.setBlock({ x: pos.x, y: pos.y, z: pos.z, blockName: noteBlockName, relative: false })
+        console.log('[noteTest] Note block placed, waiting for block update...')
+        await new Promise(resolve => setTimeout(resolve, BLOCK_PLACEMENT_DELAY))
+
+        // Check what block is at the position
+        const placedBlock = bot.blockAt(pos)
+        console.log(`[noteTest] Block at position: ${placedBlock ? `${placedBlock.name} (type=${placedBlock.type})` : 'null'}`)
+
+        if (!placedBlock || (placedBlock.name !== 'note_block' && placedBlock.name !== 'noteblock')) {
+          throw new Error(`Failed to place note block at ${JSON.stringify(pos)}, found: ${placedBlock ? placedBlock.name : 'null'}`)
+        }
+
+        console.log('[noteTest] Setting up noteHeard listener')
+        const noteHeardPromise = once(bot, 'noteHeard', 7000)
+
+        // Activate (right-click) the note block to play it
+        console.log('[noteTest] Calling bot.activateBlock()...')
+        const activatePromise = bot.activateBlock(placedBlock)
+        console.log('[noteTest] bot.activateBlock() returned, waiting for promise...')
+        await activatePromise
+        console.log('[noteTest] bot.activateBlock() completed, waiting for noteHeard event...')
+
+        // Wait a bit to see if any packets arrive
+        await new Promise(resolve => setTimeout(resolve, 500))
+        console.log(`[noteTest] After 500ms wait: block_action=${blockActionReceived}, block_dig=${blockDigReceived}`)
+
+        const [block, instrument, pitch] = await noteHeardPromise
+        console.log(`[noteTest] Note heard! Block: ${block.name}, Instrument: ${JSON.stringify(instrument)}, Pitch: ${pitch}`)
+
+        assert.strictEqual(block.name, noteBlockName, 'Wrong block name')
+
+        // Validate instrument type (can be string or object depending on version)
+        if (typeof instrument === 'string') {
+          // String instrument name (older versions)
+        } else if (typeof instrument === 'object' && instrument !== null) {
+          // Object with name and id (newer versions)
+          assert.ok(typeof instrument.name === 'string', 'Instrument name should be a string')
+          assert.ok(typeof instrument.id === 'number', 'Instrument id should be a number')
+        } else {
+          throw new Error(`Unexpected instrument type: ${typeof instrument}`)
+        }
+
+        assert.strictEqual(typeof pitch, 'number', 'Pitch should be a number')
+        assert.ok(pitch >= 0 && pitch <= 24, `Pitch out of range: ${pitch}`)
+        console.log('[noteTest] Test passed successfully')
+      } finally {
+        bot._client.removeListener('block_action', blockActionListener)
+        bot._client.removeListener('block_dig', blockDigListener)
+        console.log(`[noteTest] Packet summary: block_action=${blockActionReceived}, block_dig=${blockDigReceived}`)
+      }
     }, 3, 3000) // Retry up to 3 times with 3 second delay between attempts
   }
 
