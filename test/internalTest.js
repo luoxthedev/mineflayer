@@ -203,7 +203,7 @@ for (const supportedVersion of mineflayer.testedVersions) {
       const entities = bot.registry.entitiesByName
       const creeperId = entities.creeper ? entities.creeper.id : entities.Creeper.id
       server.on('playerJoin', (client) => {
-        const data = {
+        client.write(bot.registry.supportFeature('consolidatedEntitySpawnPacket') ? 'spawn_entity' : 'spawn_entity_living', {
           entityId: 8, // random
           entityUUID: '00112233-4455-6677-8899-aabbccddeeff',
           objectUUID: '00112233-4455-6677-8899-aabbccddeeff',
@@ -214,13 +214,12 @@ for (const supportedVersion of mineflayer.testedVersions) {
           yaw: 13,
           pitch: 14,
           headPitch: 14,
+          velocity: { x: 15, y: 16, z: 17 },
+          velocityX: 16,
+          velocityY: 17,
+          velocityZ: 18,
           metadata: []
-        }
-        data.velocity = { x: 0, y: 0, z: 0 }
-        data.velocityX = 0
-        data.velocityY = 0
-        data.velocityZ = 0
-        client.write(bot.registry.supportFeature('consolidatedEntitySpawnPacket') ? 'spawn_entity' : 'spawn_entity_living', data)
+        })
         client.write('entity_effect', {
           entityId: 8,
           effectId: 10,
@@ -590,7 +589,7 @@ for (const supportedVersion of mineflayer.testedVersions) {
           }
 
           if (bot.registry.supportFeature('unifiedPlayerAndEntitySpawnPacket')) {
-            const data = {
+            client.write('spawn_entity', {
               entityId: 56,
               objectUUID: '1-2-3-4',
               type: bot.registry.entitiesByName.player.internalId,
@@ -600,13 +599,12 @@ for (const supportedVersion of mineflayer.testedVersions) {
               pitch: 0,
               yaw: 0,
               headPitch: 0,
-              objectData: 1
-            }
-            data.velocity = { x: 0, y: 0, z: 0 }
-            data.velocityX = 0
-            data.velocityY = 0
-            data.velocityZ = 0
-            client.write('spawn_entity', data)
+              objectData: 1,
+              velocity: { x: 0, y: 0, z: 0 },
+              velocityX: 0,
+              velocityY: 0,
+              velocityZ: 0
+            })
           } else {
             client.write('named_entity_spawn', {
               entityId: 56,
@@ -672,7 +670,7 @@ for (const supportedVersion of mineflayer.testedVersions) {
           }
 
           if (bot.registry.supportFeature('unifiedPlayerAndEntitySpawnPacket')) {
-            const data = {
+            client.write('spawn_entity', {
               entityId: 56,
               objectUUID: '1-2-3-4',
               type: bot.registry.entitiesByName.player.internalId,
@@ -682,13 +680,12 @@ for (const supportedVersion of mineflayer.testedVersions) {
               pitch: 0,
               yaw: 0,
               headPitch: 0,
-              objectData: 1
-            }
-            data.velocity = { x: 0, y: 0, z: 0 }
-            data.velocityX = 0
-            data.velocityY = 0
-            data.velocityZ = 0
-            client.write('spawn_entity', data)
+              objectData: 1,
+              velocity: { x: 0, y: 0, z: 0 },
+              velocityX: 0,
+              velocityY: 0,
+              velocityZ: 0
+            })
           } else {
             client.write('named_entity_spawn', {
               entityId: 56,
@@ -729,7 +726,7 @@ for (const supportedVersion of mineflayer.testedVersions) {
           // Versions prior to 1.11 have capital first letter
           const entities = bot.registry.entitiesByName
           const creeperId = entities.creeper ? entities.creeper.id : entities.Creeper.id
-          const data = {
+          client.write(bot.registry.supportFeature('consolidatedEntitySpawnPacket') ? 'spawn_entity' : 'spawn_entity_living', {
             entityId: 8, // random
             entityUUID: '00112233-4455-6677-8899-aabbccddeeff',
             objectUUID: '00112233-4455-6677-8899-aabbccddeeff',
@@ -740,16 +737,15 @@ for (const supportedVersion of mineflayer.testedVersions) {
             yaw: 13,
             pitch: 14,
             headPitch: 14,
+            velocity: { x: 15, y: 16, z: 17 },
+            velocityX: 16,
+            velocityY: 17,
+            velocityZ: 18,
             metadata: [
               { type: 0, key: bot.registry.supportFeature('mcDataHasEntityMetadata') ? 'byte' : 0, value: 0 },
               { type: 0, key: bot.registry.supportFeature('mcDataHasEntityMetadata') ? 'int' : 1, value: 1 }
             ]
-          }
-          data.velocity = { x: 0, y: 0, z: 0 }
-          data.velocityX = 0
-          data.velocityY = 0
-          data.velocityZ = 0
-          client.write(bot.registry.supportFeature('consolidatedEntitySpawnPacket') ? 'spawn_entity' : 'spawn_entity_living', data)
+          })
         })
       })
 
@@ -779,7 +775,7 @@ for (const supportedVersion of mineflayer.testedVersions) {
           } else {
             entityType = bot.registry.entitiesArray.find(e => e.name.toLowerCase() === 'item' || e.name.toLowerCase() === 'item_stack').id
           }
-          const data = {
+          client.write('spawn_entity', {
             entityId: 16,
             objectUUID: '00112233-4455-6677-8899-aabbccddeeff',
             type: Number(entityType),
@@ -789,13 +785,11 @@ for (const supportedVersion of mineflayer.testedVersions) {
             pitch: 0,
             yaw: 0,
             headPitch: 0,
-            objectData: 1
-          }
-          data.velocity = { x: 0, y: 0, z: 0 }
-          data.velocityX = 0
-          data.velocityY = 0
-          data.velocityZ = 0
-          client.write('spawn_entity', data)
+            objectData: 1,
+            velocityX: 0,
+            velocityY: 0,
+            velocityZ: 0
+          })
 
           const metadataPacket = {
             entityId: 16,
@@ -919,7 +913,8 @@ for (const supportedVersion of mineflayer.testedVersions) {
           flags: 0,
           teleportId: 1
         })
-        const data = {
+
+        client.write(bot.registry.supportFeature('consolidatedEntitySpawnPacket') ? 'spawn_entity' : 'spawn_entity_living', {
           entityId: 8,
           entityUUID: '00112233-4455-6677-8899-aabbccddeeff',
           objectUUID: '00112233-4455-6677-8899-aabbccddeeff',
@@ -930,13 +925,12 @@ for (const supportedVersion of mineflayer.testedVersions) {
           yaw: 0,
           pitch: 0,
           headPitch: 0,
+          velocity: { x: 0, y: 0, z: 0 },
+          velocityX: 0,
+          velocityY: 0,
+          velocityZ: 0,
           metadata: []
-        }
-        data.velocity = { x: 0, y: 0, z: 0 }
-        data.velocityX = 0
-        data.velocityY = 0
-        data.velocityZ = 0
-        client.write(bot.registry.supportFeature('consolidatedEntitySpawnPacket') ? 'spawn_entity' : 'spawn_entity_living', data)
+        })
 
         client.write('map_chunk', generateChunkPacket(chunk))
       })
