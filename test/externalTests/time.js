@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { once } = require('../../lib/promise_utils')
+const { once, onceWithCleanup } = require('../../lib/promise_utils')
 
 module.exports = () => async (bot) => {
   // Test time properties and ranges
@@ -30,9 +30,17 @@ module.exports = () => async (bot) => {
   // Helper functions
   const isTimeClose = (current, target) => Math.abs(current - target) < 510
   const isTimeInRange = (current, start, end) => start <= end ? current >= start && current <= end : current >= start || current <= end
-  const waitForTime = async () => {
-    await once(bot, 'time')
-    await bot.test.wait(200)
+  const waitForTime = async (expectedTime) => {
+    // Wait for a time event that matches our expectation (if provided)
+    // This helps avoid race conditions where we catch an old time update
+    if (expectedTime !== undefined) {
+      await onceWithCleanup(bot, 'time', {
+        timeout: 5000,
+        checkCondition: () => isTimeClose(bot.time.timeOfDay, expectedTime)
+      })
+    } else {
+      await once(bot, 'time')
+    }
   }
 
   // Test time transitions
@@ -45,7 +53,7 @@ module.exports = () => async (bot) => {
 
   for (const test of timeTests) {
     bot.test.sayEverywhere(`/time set ${test.time}`)
-    await waitForTime()
+    await waitForTime(test.time)
     assert(isTimeClose(bot.time.timeOfDay, test.time), `Expected time to be close to ${test.time}, got ${bot.time.timeOfDay}`)
     assert.strictEqual(bot.time.isDay, test.isDay, `${test.name} should be ${test.isDay ? 'day' : 'night'}`)
   }
