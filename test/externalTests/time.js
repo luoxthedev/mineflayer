@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { once } = require('../../lib/promise_utils')
+const { once, onceWithCleanup } = require('../../lib/promise_utils')
 
 module.exports = () => async (bot) => {
   // Test time properties and ranges
@@ -34,17 +34,12 @@ module.exports = () => async (bot) => {
     // Wait for a time event that matches our expectation (if provided)
     // This helps avoid race conditions where we catch an old time update
     if (expectedTime !== undefined) {
-      await once(bot, 'time', 5000)
-      // Wait a bit more to allow the time to settle
-      await bot.test.wait(100)
-      // If time is not close yet, wait for one more time update
-      if (!isTimeClose(bot.time.timeOfDay, expectedTime)) {
-        await once(bot, 'time', 5000)
-        await bot.test.wait(100)
-      }
+      await onceWithCleanup(bot, 'time', {
+        timeout: 5000,
+        checkCondition: () => isTimeClose(bot.time.timeOfDay, expectedTime)
+      })
     } else {
       await once(bot, 'time')
-      await bot.test.wait(200)
     }
   }
 
