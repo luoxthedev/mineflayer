@@ -68,7 +68,11 @@ for (const supportedVersion of mineflayer.testedVersions) {
         bot.once('spawn', () => {
           console.log('bot spawned, opping...')
           wrap.writeServer('op flatbot\n')
-          wrap.writeServer('gamerule spawnMonsters false\n')
+          if (bot.supportFeature('gameRuleUsesResourceLocation')) {
+            wrap.writeServer('gamerule minecraft:spawn_monsters false\n')
+          } else {
+            wrap.writeServer('gamerule spawnMonsters false\n')
+          }
           bot.once('messagestr', msg => {
             if (msg.includes('Made flatbot a server operator') || msg === '[Server: Opped flatbot]') {
               done()

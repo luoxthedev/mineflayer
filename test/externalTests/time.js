@@ -60,11 +60,19 @@ module.exports = () => async (bot) => {
 
   // Test daylight cycle
   const originalDaylightCycle = bot.time.doDaylightCycle
-  bot.test.sayEverywhere('/gamerule doDaylightCycle false')
+  if (bot.supportFeature('gameRuleUsesResourceLocation')) {
+    bot.test.sayEverywhere('/gamerule minecraft:advance_time false')
+  } else {
+    bot.test.sayEverywhere('/gamerule doDaylightCycle false')
+  }
   await waitForTime()
   assert.strictEqual(bot.time.doDaylightCycle, false)
 
-  bot.test.sayEverywhere(`/gamerule doDaylightCycle ${originalDaylightCycle}`)
+  if (bot.supportFeature('gameRuleUsesResourceLocation')) {
+    bot.test.sayEverywhere(`/gamerule minecraft:advance_time ${originalDaylightCycle}`)
+  } else {
+    bot.test.sayEverywhere(`/gamerule doDaylightCycle ${originalDaylightCycle}`)
+  }
   await waitForTime()
   assert.strictEqual(bot.time.doDaylightCycle, originalDaylightCycle)
 
