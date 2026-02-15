@@ -12,48 +12,55 @@
 | <sub>EN</sub> [Anglais](../README.md) | <sub>RU</sub> [Russe](../ru/README_RU.md) | <sub>ES</sub> [Espagnol](../es/README_ES.md) | <sub>FR</sub> [Français](README_FR.md) | <sub>TR</sub> [Türkçe](../tr/README_TR.md) | <sub>ZH</sub> [Chinois](../zh/README_ZH_CN.md) | <sub>BR</sub> [Portuguese](../br/README_BR.md) |
 |-------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|----------------------------|
 
-Créé des robots Minecraft avec API stable, puissante et facilement maniable, [API](api.md).
+Créer des robots Minecraft avec une API stable, puissante et de haut niveau en JavaScript, également utilisable depuis Python.
 
-Si c'est la première fois que vous utilisez Node.js, il vaut mieux commencer avec le [tutoriel](tutorial.md)
+Si c'est la première fois que vous utilisez Node.js, vous devriez commencer avec le [tutoriel](tutorial.md). Vous connaissez Python ? Consultez quelques [exemples Python](https://github.com/PrismarineJS/mineflayer/tree/master/examples/python) et essayez [Mineflayer sur Google Colab](https://colab.research.google.com/github/PrismarineJS/mineflayer/blob/master/docs/mineflayer.ipynb).
 
-## Caractéristiques:
+## Caractéristiques
 
- * Compatible avec Minecraft 1.8, 1.9, 1.10, 1.11, 1.12, 1.13, 1.14, 1.15, 1.16, 1.17, 1.18, 1.19 et 1.20.
- * Reconnaissante et pistage des entités.
- * Identification des blocs. Vous pouvez passer en revue le monde autour de vous. Quelques millisecondes suffisent pour trouver n'importe quel bloc.
- * Information sur la physique et mouvements, données sur la taille des blocs...
- * Peut attaquer des entitées et utiliser des véhicules.
- * Gestion d'inventaire.
- * Gestion de l'établi, coffre, distributeur, table d'enchantement.
- * creuser et construire.
- * Autres actions diverses, telle que connaitre tes points de vie ou si il pleut.
- * Utiliser les blocs et items.
- * Discuter avec le chat.
+ * Supporte Minecraft 1.8 à 1.21.11 (1.8, 1.9, 1.10, 1.11, 1.12, 1.13, 1.14, 1.15, 1.16, 1.17, 1.18, 1.19, 1.20, 1.21, 1.21.9, 1.21.11) <!--version-->
+ * Reconnaissance et pistage des entités.
+ * Connaissance des blocs. Vous pouvez interroger le monde autour de vous. Quelques millisecondes suffisent pour trouver n'importe quel bloc.
+ * Physique et mouvement - gère toutes les boîtes de collision.
+ * Attaquer des entités et utiliser des véhicules.
+ * Gestion de l'inventaire.
+ * Artisanat, coffres, distributeurs, tables d'enchantement.
+ * Creuser et construire.
+ * Diverses fonctionnalités telles que connaître vos points de vie ou s'il pleut.
+ * Activer des blocs et utiliser des objets.
+ * Chat.
 
-### Projets à venir:
+### Feuille de route
 
- Visite cette page pour voir nos projets [projets](https://github.com/PrismarineJS/mineflayer/wiki/Big-Prismarine-projects). 
+ Consultez [cette page](https://github.com/PrismarineJS/mineflayer/wiki/Big-Prismarine-projects) pour voir quels sont nos projets actuels. 
  
 ## Installation
 
-En premier installer Node.js (version minimale requise: 14) sur [nodejs.org](https://nodejs.org/) puis taper dans la console:
+D'abord, installez Node.js >= 18 depuis [nodejs.org](https://nodejs.org/) puis :
 
-`npm install mineflayer`
+```bash
+npm install mineflayer
+```
+
+Pour mettre à jour mineflayer (ou n'importe quel package Node.js) et ses dépendances, utilisez :
+```bash
+npm update
+```
 
 ## Documentation
 
 | lien | description |
 |---|---|
-| [tutoriel](tutorial.md) | Démarre par un tutoriel node js et mineflayer |
-| [FAQ](FAQ.md) | Une question? Regardez d'abord ici ! |
-| [API](api.md) [unstable_api.md](unstable_api.md) | L'API intégrale |
-| [changement](history.md) | Les derniers changements dans mineflayer |
-| [exemples](https://github.com/PrismarineJS/mineflayer/tree/master/examples) | quelques exemples réalisables avec mineflayer |
+|[tutorial](tutorial.md) | Commencez avec Node.js et mineflayer |
+| [FAQ.md](FAQ.md) | Vous avez une question ? Allez d'abord ici |
+| **[api.md](api.md)** <br/>[unstable_api.md](unstable_api.md) | La référence complète de l'API |
+| [history.md](history.md) | L'historique des changements de mineflayer |
+| [examples/](https://github.com/PrismarineJS/mineflayer/tree/master/examples) | Consultez tous les exemples de mineflayer |
 
 
-## Pour Aider
+## Contribuer
 
-Allez lire [CONTRIBUTING.md](CONTRIBUTING.md) et [prismarine-contribute](https://github.com/PrismarineJS/prismarine-contribute).
+Veuillez lire [CONTRIBUTING.md](CONTRIBUTING.md) et [prismarine-contribute](https://github.com/PrismarineJS/prismarine-contribute)
 
 ## Utilisation
 
@@ -68,67 +75,88 @@ Si vous voulez en apprendre plus, des video peuvent être trouvées [ici,](https
 [<img src="https://img.youtube.com/vi/ssWE0kXDGJE/0.jpg" alt="tutorial 3" width="200">](https://www.youtube.com/watch?v=ssWE0kXDGJE)
 [<img src="https://img.youtube.com/vi/walbRk20KYU/0.jpg" alt="tutorial 4" width="200">](https://www.youtube.com/watch?v=walbRk20KYU)
 
-**Introduction à mineflayer**
+**Premiers pas**
 
-Si aucune version n'est specifiée, la version du serveur est automatiquement détectée.
-Vous pouvez toujours en specifier une manuellement dans les options:
-Par exemple `version:"1.16.5"`.
+Sans version spécifiée, la version du serveur sera devinée automatiquement.
+Sans authentification spécifiée, le style d'authentification Mojang sera deviné.
 
-### Echo Example
+### Exemple Echo
 ```js
 const mineflayer = require('mineflayer')
 
 const bot = mineflayer.createBot({
-  host: 'localhost', // optionel
-  port: 25565, // optionel
-  username: 'email@example.com', // l'email et le mot de passe sont requis seulement pour les serveurs
-  password: '12345678', // online-mode=true
-  version: false, // faux, corresponds pour la detection automatique(par défaut), met "1.8.8" par exemple si tu a besoin d'une version specifique
-  auth: 'mojang' // optionel; par defaut utilise mojang, si vous utilisez un compte microsoft, preciser 'microsoft'
+  host: 'localhost', // ip du serveur minecraft
+  username: 'Bot', // nom d'utilisateur pour rejoindre si auth est `offline`, sinon un identifiant unique pour ce compte. Changez si vous voulez changer de compte
+  auth: 'microsoft' // pour les serveurs en mode hors ligne, vous pouvez définir ceci à 'offline'
+  // port: 25565,              // définir si vous avez besoin d'un port différent de 25565
+  // version: false,           // définir uniquement si vous avez besoin d'une version spécifique ou d'un snapshot (par exemple : "1.8.9" ou "1.16.5"), sinon c'est défini automatiquement
+  // password: '12345678'      // définir si vous voulez utiliser l'authentification par mot de passe (peut être peu fiable). Si spécifié, le `username` doit être un email
 })
 
-bot.on('chat', function (username, message) {
+bot.on('chat', (username, message) => {
   if (username === bot.username) return
   bot.chat(message)
 })
 
-// erreur de code, ou raison de kick:
-bot.on('kicked', (reason, loggedIn) => console.log(reason, loggedIn))
-bot.on('error', err => console.log(err))
+// Enregistrer les erreurs et les raisons de kick :
+bot.on('kicked', console.log)
+bot.on('error', console.log)
 ```
 
-### Observer ce que fait votre robot en temp réel
-Grace au projet [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer), il est maintenant possible de voir ce que votre robot fait.
-Il suffit de lancer `npm install prismarine-viewer` dans votre console et d'ajouter ceci à votre code:
+Si `auth` est défini sur `microsoft`, vous serez invité à vous connecter à microsoft.com avec un code dans votre navigateur. Après vous être connecté dans votre navigateur,
+le bot obtiendra et mettra automatiquement en cache les jetons d'authentification (sous votre nom d'utilisateur spécifié) afin que vous n'ayez pas à vous reconnecter.
+
+Pour changer de compte, mettez à jour le `username` fourni. Par défaut, les jetons mis en cache seront stockés dans le dossier .minecraft de votre utilisateur, ou si `profilesFolder` est spécifié, ils seront stockés là-bas à la place.
+Pour plus d'informations sur les options du bot, consultez la [documentation API](https://github.com/PrismarineJS/node-minecraft-protocol/blob/master/docs/API.md#mccreateclientoptions) de node-minecraft-protocol.
+
+#### Se connecter à un Realm
+
+Pour rejoindre un Realm auquel votre compte Minecraft a été invité, vous pouvez passer un objet `realms` avec une fonction de sélection comme ci-dessous.
+
 ```js
-const mineflayerViewer = require('prismarine-viewer').mineflayer
-bot.once('spawn', () => {
-  mineflayerViewer(bot, { port: 3007, firstPerson: true })
+const client = mineflayer.createBot({
+  username: 'email@example.com', // nom d'utilisateur minecraft
+  realms: {
+    // Cette fonction est appelée avec un tableau de Realms que le compte peut rejoindre. Elle doit retourner celui qu'elle veut rejoindre.
+    pickRealm: (realms) => realms[0]
+  },
+  auth: 'microsoft'
 })
 ```
-et vous obtiendrez un affichage en *direct* qui ressemble à ceci:
+
+### Voir ce que fait votre bot
+
+Grâce au projet [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer), il est possible d'afficher dans une fenêtre de navigateur ce que fait votre bot.
+Il suffit d'exécuter `npm install prismarine-viewer` et d'ajouter ceci à votre bot :
+```js
+const { mineflayer: mineflayerViewer } = require('prismarine-viewer')
+bot.once('spawn', () => {
+  mineflayerViewer(bot, { port: 3007, firstPerson: true }) // port est le port du serveur minecraft, si firstPerson est false, vous obtenez une vue à vol d'oiseau
+})
+```
+Et vous obtiendrez une vue *en direct* ressemblant à ceci :
 
 [<img src="https://prismarinejs.github.io/prismarine-viewer/test_1.16.1.png" alt="viewer" width="500">](https://prismarinejs.github.io/prismarine-viewer/)
 
-#### Exemples:
+#### Plus d'exemples
 
 | exemple | description |
 |---|---|
-|[maps](https://github.com/PrismarineJS/mineflayer/tree/master/examples/viewer) | afficher ce que votre robot fait en direct |
-|[pathfinder](https://github.com/Karang/mineflayer-pathfinder/blob/master/examples/test.js) | Faire votre robot se déplacer la oû vous voulez |
-|[coffre](https://github.com/PrismarineJS/mineflayer/blob/master/examples/chest.js) | Utiliser les coffres, fours, distrubuteurs, tables d'enchantements |
-|[pelteuse](https://github.com/PrismarineJS/mineflayer/blob/master/examples/digger.js) | Aprener comment créer un robot simple capable de creuser |
-|[discord](https://github.com/PrismarineJS/mineflayer/blob/master/examples/discord.js) | connectez un bot discord avec un robot mineflayer |
-|[jumper](https://github.com/PrismarineJS/mineflayer/blob/master/examples/jumper.js) | Un robot simple qui peut bouger, sauter, conduire des véhicules, attaquer des créatures proches |
-|[ansi](https://github.com/PrismarineJS/mineflayer/blob/master/examples/ansi.js) | Afficher le chat du robot avec les couleurs du chat dans votre terminal |
-|[guard](https://github.com/PrismarineJS/mineflayer/blob/master/examples/guard.js) | Faire un robot qui garde une zone definie |
-|[multiple-from-file](https://github.com/PrismarineJS/mineflayer/blob/master/examples/multiple_from_file.js) | fichier texte avec tous vos comptes minecraft |
+|[viewer](https://github.com/PrismarineJS/mineflayer/tree/master/examples/viewer) | Afficher la vue du monde de votre bot dans le navigateur |
+|[pathfinder](https://github.com/PrismarineJS/mineflayer/tree/master/examples/pathfinder) | Faire en sorte que votre bot aille à n'importe quel endroit automatiquement |
+|[chest](https://github.com/PrismarineJS/mineflayer/blob/master/examples/chest.js) | Utiliser les coffres, fours, distributeurs, tables d'enchantement |
+|[digger](https://github.com/PrismarineJS/mineflayer/blob/master/examples/digger.js) | Apprendre comment créer un bot simple capable de creuser des blocs |
+|[discord](https://github.com/PrismarineJS/mineflayer/blob/master/examples/discord.js) | Connecter un bot discord avec un bot mineflayer |
+|[jumper](https://github.com/PrismarineJS/mineflayer/blob/master/examples/jumper.js) | Apprendre comment se déplacer, sauter, conduire des véhicules, attaquer des entités proches |
+|[ansi](https://github.com/PrismarineJS/mineflayer/blob/master/examples/ansi.js) | Afficher le chat de votre bot avec toutes les couleurs du chat affichées dans votre terminal |
+|[guard](https://github.com/PrismarineJS/mineflayer/blob/master/examples/guard.js) | Faire en sorte qu'un bot garde une zone définie contre les mobs proches |
+|[multiple-from-file](https://github.com/PrismarineJS/mineflayer/blob/master/examples/multiple_from_file.js) | Ajouter un fichier texte avec des comptes et les faire tous se connecter |
 
-Et de nombreux exemples dans le dossier [exemples](https://github.com/PrismarineJS/mineflayer/tree/master/examples)
+Et bien d'autres dans le dossier [examples](https://github.com/PrismarineJS/mineflayer/tree/master/examples).
 
 ### Modules
 
-Beaucoup de development arrive à l'interieur de petit package npm, qui sont utilisé par mineflayer
+Beaucoup de développement actif se fait dans de petits packages npm qui sont utilisés par mineflayer.
 
 #### The Node Way&trade;
 
@@ -136,25 +164,25 @@ Beaucoup de development arrive à l'interieur de petit package npm, qui sont uti
 
 #### Modules
 
-Voici les modules principales qui contruisent mineflayer:
+Voici les principaux modules qui constituent mineflayer :
 
 | module | description |
 |---|---|
-| [minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol) | Traduis et serialise les packets minecraft, plus l'authentication et l'encryption.
-| [minecraft-data](https://github.com/PrismarineJS/minecraft-data) | Module qui provide des données minecraft pour les clients minecraft, les serveurs et les librairies.
-| [prismarine-physics](https://github.com/PrismarineJS/prismarine-physics) | provide les moteurs de physique pour les entitées minecraft.
-| [prismarine-chunk](https://github.com/PrismarineJS/prismarine-chunk) | Une class pour contenir les chunks minecraft
-| [node-vec3](https://github.com/PrismarineJS/node-vec3) | Mathematique de vecteur 3D
-| [prismarine-block](https://github.com/PrismarineJS/prismarine-block) | Represente un block minecraft avec les données associés.
-| [prismarine-chat](https://github.com/PrismarineJS/prismarine-chat) | Une traducteur pour les messages de chat minecraft (extracté depuis mineflayer)
-| [node-yggdrasil](https://github.com/PrismarineJS/node-yggdrasil) | Une librairies Node.js pour intéragir avecles systeme d'authenfication de mojang, connue sous le nom de Yggdrasil
-| [prismarine-world](https://github.com/PrismarineJS/prismarine-world) | l'implementation des mondes pour prismarine
-| [prismarine-windows](https://github.com/PrismarineJS/prismarine-windows) | Represente une fenetre minecraft
-| [prismarine-item](https://github.com/PrismarineJS/prismarine-item) | Contient les items minecraft et les donnnées qui y sont associé
-| [prismarine-nbt](https://github.com/PrismarineJS/prismarine-nbt) | Un traducteur NBT pour node-minecraft-protocol
-| [prismarine-recipe](https://github.com/PrismarineJS/prismarine-recipe) | Contient les récettes minecraft
-| [prismarine-biome](https://github.com/PrismarineJS/prismarine-biome) | Contient les biome et leur données 
-| [prismarine-entity](https://github.com/PrismarineJS/prismarine-entity) | Represente une entitées minecraft
+| [minecraft-protocol](https://github.com/PrismarineJS/node-minecraft-protocol) | Analyse et sérialise les paquets minecraft, plus l'authentification et le chiffrement.
+| [minecraft-data](https://github.com/PrismarineJS/minecraft-data) | Module indépendant du langage fournissant des données minecraft pour les clients, serveurs et bibliothèques minecraft.
+| [prismarine-physics](https://github.com/PrismarineJS/prismarine-physics) | Fournit le moteur de physique pour les entités minecraft
+| [prismarine-chunk](https://github.com/PrismarineJS/prismarine-chunk) | Une classe pour contenir les données de chunk pour Minecraft
+| [node-vec3](https://github.com/PrismarineJS/node-vec3) | Mathématiques vectorielles 3D avec des tests unitaires robustes
+| [prismarine-block](https://github.com/PrismarineJS/prismarine-block) | Représente un bloc minecraft avec ses données associées
+| [prismarine-chat](https://github.com/PrismarineJS/prismarine-chat) | Un analyseur pour un message de chat minecraft (extrait de mineflayer)
+| [node-yggdrasil](https://github.com/PrismarineJS/node-yggdrasil) | Bibliothèque Node.js pour interagir avec le système d'authentification de Mojang, connu sous le nom d'Yggdrasil
+| [prismarine-world](https://github.com/PrismarineJS/prismarine-world) | L'implémentation principale des mondes pour prismarine
+| [prismarine-windows](https://github.com/PrismarineJS/prismarine-windows) | Représente les fenêtres minecraft
+| [prismarine-item](https://github.com/PrismarineJS/prismarine-item) | Représente un objet minecraft avec ses données associées
+| [prismarine-nbt](https://github.com/PrismarineJS/prismarine-nbt) | Un analyseur NBT pour node-minecraft-protocol
+| [prismarine-recipe](https://github.com/PrismarineJS/prismarine-recipe) | Représente les recettes minecraft
+| [prismarine-biome](https://github.com/PrismarineJS/prismarine-biome) | Représente un biome minecraft avec ses données associées
+| [prismarine-entity](https://github.com/PrismarineJS/prismarine-entity) | Représente une entité minecraft
 
 
 ### Debug
@@ -171,82 +199,94 @@ set DEBUG=minecraft-protocol
 node your_script.js
 ```
 
-## Third Party Plugins
+## Plugins tiers
 
-Mineflayer peut être amélioré avec plusieurs plugins; tout le monde peut créer un plugin qui ajoute une API de plus haut niveaux au-dessus de Mineflayer.
+Mineflayer est extensible ; n'importe qui peut créer un plugin qui ajoute une API de plus haut niveau au-dessus de Mineflayer.
 
-Les plugins les plus récents et les plus utiles sont :
+Les plus récents et utiles sont :
 
- * [pathfinder](https://github.com/PrismarineJS/mineflayer-pathfinder) - advanced A* pathfinding avec de nombres paramètres configurables
- * [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer) - Un simple inspecteur web de chunk
- * [web-inventory](https://github.com/ImHarvol/mineflayer-web-inventory) - un inspecteur d'inventaire en ligne
- * [statemachine](https://github.com/PrismarineJS/mineflayer-statemachine) - Une API pour state machine pour robots aux comportements complexes
- * [Armor Manager](https://github.com/PrismarineJS/MineflayerArmorManager) - gestion d'armure automatique
- * [Collect Block](https://github.com/PrismarineJS/mineflayer-collectblock) - Une API rapide et flexible pour colleter des blocs.
- * [Dashboard](https://github.com/wvffle/mineflayer-dashboard) - intertace en ligne pour robots mineflayer
- * [PVP](https://github.com/PrismarineJS/mineflayer-pvp) - Une API facile pour les combats contre les entités et les joueurs.
- * [auto-eat](https://github.com/LINKdiscordd/mineflayer-auto-eat) - pour manger automatiquement de la nouriture.
- * [Tool](https://github.com/PrismarineJS/mineflayer-tool) - Un plugin pour choisir automatiquement le meilleur outil pour une tâche donnée
- * [Hawkeye](https://github.com/sefirosweb/minecraftHawkEye) - Un plugin pour viser à la perfection avec des arcs.
+ * [minecraft-mcp-server](https://github.com/yuniko-software/minecraft-mcp-server) Un serveur MCP pour mineflayer, permettant d'utiliser mineflayer depuis un LLM
+ * [pathfinder](https://github.com/Karang/mineflayer-pathfinder) - recherche de chemin A* avancée avec de nombreuses fonctionnalités configurables
+ * [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer) - visionneuse de chunks web simple
+ * [web-inventory](https://github.com/ImHarvol/mineflayer-web-inventory) - visionneuse d'inventaire basée sur le web
+ * [statemachine](https://github.com/PrismarineJS/mineflayer-statemachine) - Une API de machine à états pour des comportements de bot plus complexes
+ * [Armor Manager](https://github.com/G07cha/MineflayerArmorManager) - gestion automatique de l'armure
+ * [Dashboard](https://github.com/wvffle/mineflayer-dashboard) - Tableau de bord frontend pour bot mineflayer
+ * [PVP](https://github.com/PrismarineJS/mineflayer-pvp) - API facile pour PVP et PVE de base.
+ * [Auto Eat](https://github.com/link-discord/mineflayer-auto-eat) - Alimentation automatique.
+ * [Auto Crystal](https://github.com/link-discord/mineflayer-autocrystal) - Placement et destruction automatiques de cristaux de l'End.
+ * [Tool](https://github.com/TheDudeFromCI/mineflayer-tool) - Un utilitaire pour la sélection automatique d'outil/arme avec une API de haut niveau.
+ * [Hawkeye](https://github.com/sefirosweb/minecraftHawkEye) - Un utilitaire pour utiliser la visée automatique avec des arcs.
+ * [GUI](https://github.com/firejoust/mineflayer-GUI) - Interagir avec les fenêtres GUI imbriquées en utilisant async/await
+ * [Projectile](https://github.com/firejoust/mineflayer-projectile) - Obtenir l'angle de lancement requis pour les projectiles
+ * [Movement](https://github.com/firejoust/mineflayer-movement) - Mouvement du joueur fluide et réaliste, mieux adapté au PvP
+ * [Collect Block](https://github.com/PrismarineJS/mineflayer-collectblock) - API rapide et simple de collecte de blocs.
 
+ Mais consultez également :
 
-Laissez un coup d'oeil à ses projets :
- 
- * [radar](https://github.com/andrewrk/mineflayer-radar/) - interface web utilisant un canvas et une communication socket.io. [YouTube Demo](https://www.youtube.com/watch?v=FjDmAfcVulQ)
- * [blockfinder](https://github.com/Darthfett/mineflayer-blockFinder) - trouver des blocs dans un monde 3D
- * [scaffold](https://github.com/PrismarineJS/mineflayer-scaffold) - trouver le meilleur chemin vers une destination précise en cassant et dispoant des blocs
-   [YouTube Demo](http://youtu.be/jkg6psMUSE0)
- * [auto-auth](https://github.com/G07cha/MineflayerAutoAuth) - remplissage de compte de capchat pour serveur hors-ligne
- * [Bloodhound](https://github.com/Nixes/mineflayer-bloodhound) - determiner ce qui a attaqué une autre entité.
- * [tps](https://github.com/SiebeDW/mineflayer-tps) - trouver le tps du serveur
- * [panorama](https://github.com/IceTank/mineflayer-panorama) - prendre des photos panoramiques de vos mondes.
+ * [radar](https://github.com/andrewrk/mineflayer-radar/) - interface radar web
+   utilisant canvas et socket.io. [Démo YouTube](https://www.youtube.com/watch?v=FjDmAfcVulQ)
+ * [auto-auth](https://github.com/G07cha/MineflayerAutoAuth) - authentification de bot basée sur le chat
+ * [Bloodhound](https://github.com/Nixes/mineflayer-bloodhound) - déterminer qui et quoi est responsable des dommages à une autre entité
+ * [tps](https://github.com/SiebeDW/mineflayer-tps) - obtenir le tps actuel (tps traité)
+ * [panorama](https://github.com/IceTank/mineflayer-panorama) - prendre des images panoramiques de votre monde
+ * [player-death-event](https://github.com/tuanzisama/mineflayer-death-event) - émettre un événement de mort de joueur dans Mineflayer.
 
 ## Projets utilisant Mineflayer
 
+ * [Voyager](https://github.com/MineDojo/Voyager) Un agent incarné ouvert avec de grands modèles de langage
+ * [mindcraft](https://github.com/kolbytn/mindcraft) Bibliothèque pour utiliser mineflayer avec des LLM
  * [rom1504/rbot](https://github.com/rom1504/rbot)
-   - [YouTube - créé un escalier en collimasson](https://www.youtube.com/watch?v=UM1ZV5200S0)
-   - [YouTube - réplicé une contruction](https://www.youtube.com/watch?v=0cQxg9uDnzA)
+   - [YouTube - construire un escalier en colimaçon](https://www.youtube.com/watch?v=UM1ZV5200S0)
+   - [YouTube - répliquer un bâtiment](https://www.youtube.com/watch?v=0cQxg9uDnzA)
  * [Darthfett/Helperbot](https://github.com/Darthfett/Helperbot)
- * [vogonistic/voxel](https://github.com/vogonistic/mineflayer-voxel) - visualiser se qui se passe avec son robot grâce à [voxel.js](https://www.voxeljs.com/)
- * [JonnyD/Skynet](https://github.com/JonnyD/Skynet) -  Afficher les info des joueurs sur une API en ligne
- * [MinecraftChat](https://github.com/rom1504/MinecraftChat) (derniere version open source, par AlexKvazos) -  Un client minecraft basé seulement sur le chat<https://minecraftchat.net/>
- * [Cheese Bot](https://github.com/Minecheesecraft/Cheese-Bot) - Un robot basé sur les plugins, qui a une jolie interface. Réalisée avec Node-Webkit. http://bot.ezcha.net/
- * [Chaoscraft](https://github.com/schematical/chaoscraft) - Des robots minecraft qui utilisent des algorithmes génétiques, regarder [ces videos youtube](https://www.youtube.com/playlist?list=PLLkpLgU9B5xJ7Qy4kOyBJl5J6zsDIMceH)
- * [hexatester/minetelegram](https://github.com/hexatester/minetelegram) -  Minecraft - une API telgram, construite sur Mineflayer et Telegraf.
- * [ProZedd/mineflayer-builder](https://github.com/PrismarineJS/mineflayer-builder) - "Imprimme" un .schematic dans Minecraft
- * [et beaucoup plus](https://github.com/PrismarineJS/mineflayer/network/dependents) - Tous les les projets utilisant Mineflayer
+ * [vogonistic/voxel](https://github.com/vogonistic/mineflayer-voxel) - visualiser ce que
+   fait le bot en utilisant voxel.js
+ * [JonnyD/Skynet](https://github.com/JonnyD/Skynet) -  enregistrer l'activité des joueurs sur une API en ligne
+ * [MinecraftChat](https://github.com/rom1504/MinecraftChat) (dernière version open source, créée par AlexKvazos) -  Client de chat Minecraft basé sur le web
+ * [Cheese Bot](https://github.com/Minecheesecraft/Cheese-Bot) - Bot basé sur les plugins avec une interface graphique propre. Créé avec Node-Webkit.
+ * [Chaoscraft](https://github.com/schematical/chaoscraft) - Bot Minecraft utilisant des algorithmes génétiques, voir [ses vidéos youtube](https://www.youtube.com/playlist?list=PLLkpLgU9B5xJ7Qy4kOyBJl5J6zsDIMceH)
+ * [hexatester/minetelegram](https://github.com/hexatester/minetelegram) -  Pont Minecraft - Telegram, construit sur mineflayer & telegraf.
+ * [PrismarineJS/mineflayer-builder](https://github.com/PrismarineJS/mineflayer-builder) - Imprime des schémas minecraft en survie, en conservant l'orientation
+ * [SilkePilon/OpenDeliveryBot](https://github.com/SilkePilon/OpenDeliveryBot) - Bot Minecraft en python pour livrer des objets d'un endroit à un autre.
+ * [et des centaines d'autres](https://github.com/PrismarineJS/mineflayer/network/dependents) - Tous les projets que github a détecté comme utilisant mineflayer
 
 
-## Test
+## Tests
 
-### Tout tester
+### Tester tout
 
-Exécuter seulement :
+Exécutez simplement :
 
 ```bash
 npm test
 ```
 
 ### Tester une version spécifique
-
 Exécutez
 
 ```bash
-npm test -g <version>
+npm run mocha_test -- -g <version>
 ```
 
-où `<version>` est une version de Minecraft comme `1.12`, `1.15.2`...
+où `<version>` est une version minecraft comme `1.12`, `1.15.2`...
 
 ### Tester un test spécifique
-
-Executer
+Exécutez
 
 ```bash
-npm test -g <test_name>
+npm run mocha_test -- -g <test_name>
 ```
 
-où `<test_name>` est le nom d'un teste comme `lit`, `utiliseCoffre`, `rayTrace`...
+où `<test_name>` est un nom de test comme `bed`, `useChests`, `rayTrace`...
+
+### Exemple
+
+```bash
+npm run mocha_test -- -g "1.18.1.*BlockFinder"
+```
+pour exécuter le test block finder pour 1.18.1
 
 ## Licence
 
-[MIT](../../LICENSE)
+[MIT](/LICENSE)
